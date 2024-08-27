@@ -1,3 +1,3 @@
-# Infrastructure as Code ... Vegan-style - DEMO - Website
+# Infrastructure as Code ... Vegan-style - DEMO - Webapp
 
-> This repository contains the Webiste source code of the Demo project
+> This repository contains the Webapp source code of the Demo project
