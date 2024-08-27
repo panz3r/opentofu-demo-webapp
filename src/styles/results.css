@@ -1,0 +1,6 @@
+@import "./tailwind.css";
+
+#stats-bg-cats,
+#stats-bg-dogs {
+  transition: width 400ms ease-in-out;
+}

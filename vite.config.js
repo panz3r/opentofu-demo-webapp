@@ -18,6 +18,12 @@ export default defineConfig({
     },
   },
   build: {
+    rollupOptions: {
+      input: {
+        index: "src/index.html",
+        results: "src/results.html",
+      },
+    },
     outDir: path.resolve(__dirname, "dist"),
     emptyOutDir: true,
   },
