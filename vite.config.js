@@ -3,10 +3,12 @@
 import path from "node:path";
 
 import { defineConfig } from "vite";
+import html from "@tomjs/vite-plugin-html";
 
 // https://vitejs.dev/config/
 export default defineConfig({
   root: path.resolve(__dirname, "src"),
+  plugins: [html({ minify: true })],
   publicDir: path.resolve(__dirname, "public"),
   test: {
     dir: path.resolve(__dirname, "test"),
@@ -14,5 +16,9 @@ export default defineConfig({
       reportsDirectory: path.resolve(__dirname, "reports"),
       reporter: ["text", "cobertura", "lcovonly"],
     },
+  },
+  build: {
+    outDir: path.resolve(__dirname, "dist"),
+    emptyOutDir: true,
   },
 });

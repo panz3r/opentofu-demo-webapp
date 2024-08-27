@@ -1,0 +1,38 @@
+export async function castVote(voteString) {
+  console.debug(">>> Voted:", voteString);
+
+  let buttonChoiceA = document.querySelector(".btn-choice-a");
+  let buttonChoiceB = document.querySelector(".btn-choice-b");
+
+  switch (voteString) {
+    case "a":
+      buttonChoiceA.setAttribute("disabled", true);
+      buttonChoiceB.removeAttribute("disabled");
+
+      document.body.classList.add("text-teal-50", "bg-teal-600");
+      document.body.classList.remove("text-blue-50", "bg-blue-600");
+      break;
+
+    case "b":
+      buttonChoiceB.setAttribute("disabled", true);
+      buttonChoiceA.removeAttribute("disabled");
+
+      document.body.classList.add("text-blue-50", "bg-blue-600");
+      document.body.classList.remove("text-teal-50", "bg-teal-600");
+      break;
+
+    default:
+      buttonChoiceA.setAttribute("disabled", true);
+      buttonChoiceB.setAttribute("disabled", true);
+
+      document.body.classList.remove("bg-blue-600", "text-blue-50", "bg-teal-600", "text-teal-50");
+  }
+}
+
+function main() {
+  document.querySelectorAll(".btn-choice").forEach((buttonChoice) => {
+    buttonChoice.onclick = () => castVote(buttonChoice.getAttribute("value"));
+  });
+}
+
+main();
