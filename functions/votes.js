@@ -1,5 +1,22 @@
 import { createJSONResponse, parseCookies, parseRequestBody } from "./_utils";
 
+// Endpoint to retrieve votes
+export async function onRequestGet(context) {
+  // TODO: retrieve votes from DB
+  const votes = ["a", "b", "a", "b", "a", "a"];
+
+  // compute percentages
+  const votesCount = votes.length;
+  const votesA = votes.filter((vote) => vote === "a").length;
+  const votesB = votes.filter((vote) => vote === "b").length;
+
+  const percentageA = votesCount > 0 ? Math.round((votesA / votesCount) * 100) : 0;
+  const percentageB = votesCount > 0 ? Math.round((votesB / votesCount) * 100) : 0;
+
+  return createJSONResponse(200, { votesCount, percentageA, percentageB });
+}
+
+// Endpoint to register votes
 export async function onRequestPost(context) {
   try {
     const request = context.request;
