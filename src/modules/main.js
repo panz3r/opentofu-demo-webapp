@@ -1,10 +1,21 @@
 export async function castVote(voteString) {
   console.debug(">>> Voted:", voteString);
 
+  const res = await fetch("/vote", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ vote: voteString }),
+  });
+
+  const responseBody = await res.json();
+  console.debug(">>> res", responseBody);
+
   let buttonChoiceA = document.querySelector(".btn-choice-a");
   let buttonChoiceB = document.querySelector(".btn-choice-b");
 
-  switch (voteString) {
+  switch (responseBody.vote) {
     case "a":
       buttonChoiceA.setAttribute("disabled", true);
       buttonChoiceB.removeAttribute("disabled");
@@ -22,8 +33,8 @@ export async function castVote(voteString) {
       break;
 
     default:
-      buttonChoiceA.setAttribute("disabled", true);
-      buttonChoiceB.setAttribute("disabled", true);
+      buttonChoiceA.setAttribute("disabled", false);
+      buttonChoiceB.setAttribute("disabled", false);
 
       document.body.classList.remove("bg-blue-600", "text-blue-50", "bg-teal-600", "text-teal-50");
   }
