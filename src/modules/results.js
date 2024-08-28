@@ -1,5 +1,6 @@
 async function getVotes() {
-  return { votesCount: 3, percentageCats: 66, percentageDogs: 34 };
+  const response = await fetch("/votes", { method: "GET" });
+  return await response.json();
 }
 
 function getVotesText(votesCount) {
@@ -15,13 +16,13 @@ function getVotesText(votesCount) {
 async function init() {
   console.debug(">> INIT called...");
 
-  let { votesCount, percentageCats, percentageDogs } = await getVotes();
+  let { votesCount, percentageA, percentageB } = await getVotes();
 
-  document.getElementById("stats-bg-cats").style.width = percentageCats + "vw";
-  document.querySelector("#choice-cats .stat").textContent = percentageCats + "%";
+  document.querySelector("#stats-bg-a").style.width = percentageA + "vw";
+  document.querySelector("#choice-a .stat").textContent = percentageA + "%";
 
-  document.getElementById("stats-bg-dogs").style.width = percentageDogs + "vw";
-  document.querySelector("#choice-dogs .stat").textContent = percentageDogs + "%";
+  document.querySelector("#stats-bg-b").style.width = percentageB + "vw";
+  document.querySelector("#choice-b .stat").textContent = percentageB + "%";
 
   document.querySelector("#result > div").textContent = getVotesText(votesCount);
 }
