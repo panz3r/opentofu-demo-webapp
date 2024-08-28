@@ -23,6 +23,8 @@ export async function onRequestPost(context) {
       return createJSONResponse(400, { error: "Invalid vote" });
     }
 
+    // TODO: write "vote" to DB
+
     const responseContent = {
       success: true,
       vote,

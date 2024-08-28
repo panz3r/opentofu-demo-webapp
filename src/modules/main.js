@@ -1,7 +1,7 @@
 export async function castVote(voteString) {
   console.debug(">>> Voted:", voteString);
 
-  const res = await fetch("/vote", {
+  const res = await fetch("/votes", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
