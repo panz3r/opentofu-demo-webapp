@@ -14,6 +14,9 @@ export async function castVote(voteString) {
 
   const responseBody = await res.json();
 
+  // reset Turnstile challenge to allow future calls
+  turnstile.reset();
+
   // update UI based on backend response
   let buttonChoiceA = document.querySelector(".btn-choice-a");
   let buttonChoiceB = document.querySelector(".btn-choice-b");
