@@ -76,3 +76,27 @@ export function createJSONResponse(statusCode, responseContent, headers) {
     },
   });
 }
+
+export async function verifyTurnstileChallenge(context) {
+  const request = context.request;
+
+  // Turnstile injects a token in "cf-turnstile-response".
+  const token = request.headers.get("CF-Turnstile-Response");
+  const ip = request.headers.get("CF-Connecting-IP");
+
+  // Validate the token by calling the
+  // "/siteverify" API endpoint.
+  const response = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      secret: context.env.TURNSTILE_SECRET,
+      response: token,
+      remoteip: ip,
+    }),
+  });
+
+  return await response.json();
+}
