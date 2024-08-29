@@ -13,9 +13,7 @@ function getVotesText(votesCount) {
   }
 }
 
-async function init() {
-  console.debug(">> INIT called...");
-
+async function updateUI() {
   let { votesCount, percentageA, percentageB } = await getVotes();
 
   document.querySelector("#stats-bg-a").style.width = percentageA + "vw";
@@ -27,4 +25,5 @@ async function init() {
   document.querySelector("#result > div").textContent = getVotesText(votesCount);
 }
 
-init();
+updateUI();
+setInterval(updateUI, 30 * 1000);
