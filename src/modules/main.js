@@ -1,9 +1,8 @@
 export async function castVote(voteString) {
-  console.debug(">>> Voted:", voteString);
-
   // retrieve Turnstile challenge response
   const turnstileChallengeResponse = turnstile.getResponse();
 
+  // submit vote
   const res = await fetch("/votes", {
     method: "POST",
     headers: {
@@ -14,8 +13,8 @@ export async function castVote(voteString) {
   });
 
   const responseBody = await res.json();
-  console.debug(">>> res", responseBody);
 
+  // update UI based on backend response
   let buttonChoiceA = document.querySelector(".btn-choice-a");
   let buttonChoiceB = document.querySelector(".btn-choice-b");
 
@@ -37,8 +36,8 @@ export async function castVote(voteString) {
       break;
 
     default:
-      buttonChoiceA.setAttribute("disabled", false);
-      buttonChoiceB.setAttribute("disabled", false);
+      buttonChoiceA.removeAttribute("disabled");
+      buttonChoiceB.removeAttribute("disabled");
 
       document.body.classList.remove("bg-blue-600", "text-blue-50", "bg-teal-600", "text-teal-50");
   }
