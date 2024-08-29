@@ -1,10 +1,14 @@
 export async function castVote(voteString) {
   console.debug(">>> Voted:", voteString);
 
+  // retrieve Turnstile challenge response
+  const turnstileChallengeResponse = turnstile.getResponse();
+
   const res = await fetch("/votes", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      "CF-Turnstile-Response": turnstileChallengeResponse,
     },
     body: JSON.stringify({ vote: voteString }),
   });
