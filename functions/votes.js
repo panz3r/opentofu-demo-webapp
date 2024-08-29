@@ -4,12 +4,10 @@ import { createJSONResponse, parseCookies, parseRequestBody } from "./_utils";
 export async function onRequestGet(context) {
   const database = context.env.DB;
 
-  // TODO: retrieve votes from DB
+  // retrieve votes from DB
   const { results } = await database.prepare("SELECT * FROM votes").all();
-  console.debug(">>> results:", results);
 
   const votes = results.map((dbRecord) => dbRecord.vote);
-  console.debug(">>> votes:", votes);
 
   // compute percentages
   const votesCount = votes.length;
