@@ -4,6 +4,14 @@
 
 ## Details
 
+## Remote Setup
+
+- Create `votes` table in remote database
+
+  ```sh
+  pnpx wrangler d1 execute DB --remote --file=database/01_add_table_votes.sql
+  ```
+
 ## Local Development
 
 - Pull remote project configuration from Cloudflare
