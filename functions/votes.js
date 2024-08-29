@@ -2,8 +2,14 @@ import { createJSONResponse, parseCookies, parseRequestBody } from "./_utils";
 
 // Endpoint to retrieve votes
 export async function onRequestGet(context) {
+  const database = context.env.DB;
+
   // TODO: retrieve votes from DB
-  const votes = ["a", "b", "a", "b", "a", "a"];
+  const { results } = await database.prepare("SELECT * FROM votes").all();
+  console.debug(">>> results:", results);
+
+  const votes = results.map((dbRecord) => dbRecord.vote);
+  console.debug(">>> votes:", votes);
 
   // compute percentages
   const votesCount = votes.length;
@@ -20,6 +26,7 @@ export async function onRequestGet(context) {
 export async function onRequestPost(context) {
   try {
     const request = context.request;
+    const database = context.env.DB;
 
     const cookies = parseCookies(request.headers.get("cookie"));
     console.debug(">> cookies:", cookies);
@@ -40,7 +47,13 @@ export async function onRequestPost(context) {
       return createJSONResponse(400, { error: "Invalid vote" });
     }
 
-    // TODO: write "vote" to DB
+    // write "vote" to DB
+    await database
+      .prepare(
+        "INSERT INTO votes VALUES (?1, ?2, ?3) ON CONFLICT(voter_id) DO UPDATE SET vote=excluded.vote, voted_on=excluded.voted_on"
+      )
+      .bind(voterId, vote, Date.now())
+      .run();
 
     const responseContent = {
       success: true,

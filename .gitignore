@@ -336,3 +336,5 @@ $RECYCLE.BIN/
 
 # Cloudflare Wrangler CLI
 .wrangler/
+#   following can be downloaded using 'npx wrangler pages download config <PROJECT_NAME>' command
+wrangler.toml
